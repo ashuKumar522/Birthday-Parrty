@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashu's Birthday Party</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            min-height: 100vh;
+        }
+
+        .welcome-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+        }
+
+        .welcome-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .continue-btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: #ff6b6b;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .food-gallery {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .food-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .food-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .food-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            background: linear-gradient(to bottom right, #FFB6C1, #FFC0CB);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .welcome-banner h1 {
+                font-size: 2rem;
+            }
+
+            .food-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .gallery-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-banner" id="welcomeBanner">
+        <h1>Welcome to Ashu's Birthday Party!</h1>
+        <button class="continue-btn" onclick="hideBanner()">Continue</button>
+    </div>
+
+    <div class="food-gallery" id="foodGallery">
+        <h1 class="gallery-title">🎉 Birthday Party Menu 🎂</h1>
+        <div class="food-grid">
+            <div class="food-item" onclick="showModal('Pizza')">
+                <img src="https://recipesblob.oetker.in/assets/d8a4b00c292a43adbb9f96798e028f01/1272x764/pizza-pollo-arrostojpg.webp" alt="Pizza">
+            </div>
+            <div class="food-item" onclick="showModal('Burger')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Wo1khcmvSvMndOJLmN7BZ9oLp6JPFTZMOw&s" alt="Burger">
+            </div>
+            <div class="food-item" onclick="showModal('Pasta')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX-_PzrCRZPnEo-1hB4BMofk6LAvJN0hSGCQ&s" alt="Pasta">
+            </div>
+            <div class="food-item" onclick="showModal('Cake')">
+                <img src="https://img.cake24x7.com/writable/apps/cake24x7/ProductGallery/5757/Everything-Is-Chocolate-Cake.jpg" alt="Cake">
+            </div>
+            <div class="food-item" onclick="showModal('Ice Cream')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Strawberry_ice_cream_cone_%285076899310%29.jpg/220px-Strawberry_ice_cream_cone_%285076899310%29.jpg" alt="Ice Cream">
+            </div>
+            <div class="food-item" onclick="showModal('Chai')">
+                <img src="https://www.teaforturmeric.com/wp-content/uploads/2021/11/Masala-Chai-Tea-Recipe-Card.jpg" alt="chai">
+            </div>
+            <div class="food-item" onclick="showModal('Chilly Panner')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn82o4spB5ZPF3NKmPA2PTckpbaSHYNYnhDg&s" alt="Chilly Panner">
+            </div>
+            <div class="food-item" onclick="showModal('Samosa')">
+                <img src="https://www.cookwithnabeela.com/wp-content/uploads/2024/02/AlooSamosa3.webp" alt="Samosa">
+            </div>
+            <div class="food-item" onclick="showModal('Biryani')">
+                <img src="https://www.indianhealthyrecipes.com/wp-content/uploads/2022/02/hyderabadi-biryani-recipe-chicken.jpg" alt="Biryani">
+            </div>
+            <div class="food-item" onclick="showModal('Noodles')">
+                <img src="https://www.chilipeppermadness.com/wp-content/uploads/2023/06/Gochujang-Noodles-Recipe-SQ.jpg" alt="Noodles">
+            </div>
+            <div class="food-item" onclick="showModal('Spring Rolls')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlI9hhJcNleKlpYjirs0Um_tcZb5ApudxMgA&s" alt="Spring Rolls">
+            </div>
+            <div class="food-item" onclick="showModal('Gulab Jamun')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3aJrkMZfZWaRkqQu36Y9TBzYlCrkKHvy7mw&s" alt="Gulab Jamun">
+            </div>
+            <div class="food-item" onclick="showModal('Momos')">
+                <img src="https://butfirstchai.com/wp-content/uploads/2022/08/beef-momos-recipe.jpg" alt="Momos">
+            </div>
+            <div class="food-item" onclick="showModal('Chilly Potato')">
+                <img src="https://static.toiimg.com/photo/52532656.cms" alt="Chilly Potato">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="foodModal">
+        <div class="modal-content">
+            <h2>OMG! Kesa Laga Maam Aapko <span id="foodName"></span>? 😋</h2>
+            <p>Spill the tea! Rate this dish! 💖✨</p>
+            <button class="continue-btn" onclick="hideModal()">Thanks bestie! 🌟</button>
+        </div>
+    </div>
+
+    <script>
+        function hideBanner() {
+            document.getElementById('welcomeBanner').style.display = 'none';
+            document.getElementById('foodGallery').style.display = 'block';
+        }
+
+        function showModal(foodName) {
+            const modal = document.getElementById('foodModal');
+            const foodNameSpan = document.getElementById('foodName');
+            modal.style.display = 'flex';
+            foodNameSpan.textContent = foodName;
+        }
+
+        function hideModal() {
+            document.getElementById('foodModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
