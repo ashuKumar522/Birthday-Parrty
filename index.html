@@ -84,6 +84,23 @@
             border-radius: 15px;
         }
 
+        .bill-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: #4CAF50;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .bill-btn:hover {
+            transform: scale(1.1);
+        }
+
         .food-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -104,10 +121,39 @@
             width: 100%;
             height: 250px;
             object-fit: cover;
+            transition: transform 0.5s ease-in-out;
         }
 
         .food-item:hover {
             transform: translateY(-10px);
+        }
+
+        .food-item.eating img {
+            animation: chewing 1s ease-in-out forwards;
+        }
+
+        .food-item.eaten {
+            display: none;
+        }
+
+        @keyframes chewing {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: scale(0.95) rotate(-5deg);
+            }
+            50% {
+                transform: scale(0.85) rotate(5deg);
+            }
+            75% {
+                transform: scale(0.75) rotate(-5deg);
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
         }
 
         .modal {
@@ -130,8 +176,77 @@
             text-align: center;
             max-width: 90%;
             width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
             background: linear-gradient(to bottom right, #FFB6C1, #FFC0CB);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .rating {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .rating-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 200px;
+        }
+
+        .rating button {
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            background: #ff6b6b;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .rating button:hover {
+            transform: scale(1.05);
+        }
+
+        .bill-details {
+            text-align: left;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .bill-details::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .bill-details::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .bill-details::-webkit-scrollbar-thumb {
+            background: #ff6b6b;
+            border-radius: 4px;
+        }
+
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+        .total-amount {
+            border-top: 2px dashed #000;
+            margin-top: 10px;
+            padding-top: 10px;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -157,47 +272,48 @@
 
     <div class="food-gallery" id="foodGallery">
         <h1 class="gallery-title">🎉 Birthday Party Menu 🎂</h1>
+        <button class="bill-btn" onclick="showBill()">Show Bill 🧾</button>
         <div class="food-grid">
-            <div class="food-item" onclick="showModal('Pizza')">
+            <div class="food-item" onclick="eatFood(this, 'Pizza', 299)">
                 <img src="https://recipesblob.oetker.in/assets/d8a4b00c292a43adbb9f96798e028f01/1272x764/pizza-pollo-arrostojpg.webp" alt="Pizza">
             </div>
-            <div class="food-item" onclick="showModal('Burger')">
+            <div class="food-item" onclick="eatFood(this, 'Burger', 149)">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Wo1khcmvSvMndOJLmN7BZ9oLp6JPFTZMOw&s" alt="Burger">
             </div>
-            <div class="food-item" onclick="showModal('Pasta')">
+            <div class="food-item" onclick="eatFood(this, 'Pasta', 199)">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX-_PzrCRZPnEo-1hB4BMofk6LAvJN0hSGCQ&s" alt="Pasta">
             </div>
-            <div class="food-item" onclick="showModal('Cake')">
+            <div class="food-item" onclick="eatFood(this, 'Cake', 599)">
                 <img src="https://img.cake24x7.com/writable/apps/cake24x7/ProductGallery/5757/Everything-Is-Chocolate-Cake.jpg" alt="Cake">
             </div>
-            <div class="food-item" onclick="showModal('Ice Cream')">
+            <div class="food-item" onclick="eatFood(this, 'Ice Cream', 99)">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Strawberry_ice_cream_cone_%285076899310%29.jpg/220px-Strawberry_ice_cream_cone_%285076899310%29.jpg" alt="Ice Cream">
             </div>
-            <div class="food-item" onclick="showModal('Chai')">
+            <div class="food-item" onclick="eatFood(this, 'Chai', 30)">
                 <img src="https://www.teaforturmeric.com/wp-content/uploads/2021/11/Masala-Chai-Tea-Recipe-Card.jpg" alt="chai">
             </div>
-            <div class="food-item" onclick="showModal('Chilly Panner')">
+            <div class="food-item" onclick="eatFood(this, 'Chilly Panner', 249)">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn82o4spB5ZPF3NKmPA2PTckpbaSHYNYnhDg&s" alt="Chilly Panner">
             </div>
-            <div class="food-item" onclick="showModal('Samosa')">
+            <div class="food-item" onclick="eatFood(this, 'Samosa', 30)">
                 <img src="https://www.cookwithnabeela.com/wp-content/uploads/2024/02/AlooSamosa3.webp" alt="Samosa">
             </div>
-            <div class="food-item" onclick="showModal('Biryani')">
+            <div class="food-item" onclick="eatFood(this, 'Biryani', 299)">
                 <img src="https://www.indianhealthyrecipes.com/wp-content/uploads/2022/02/hyderabadi-biryani-recipe-chicken.jpg" alt="Biryani">
             </div>
-            <div class="food-item" onclick="showModal('Noodles')">
+            <div class="food-item" onclick="eatFood(this, 'Noodles', 149)">
                 <img src="https://www.chilipeppermadness.com/wp-content/uploads/2023/06/Gochujang-Noodles-Recipe-SQ.jpg" alt="Noodles">
             </div>
-            <div class="food-item" onclick="showModal('Spring Rolls')">
+            <div class="food-item" onclick="eatFood(this, 'Spring Rolls', 129)">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlI9hhJcNleKlpYjirs0Um_tcZb5ApudxMgA&s" alt="Spring Rolls">
             </div>
-            <div class="food-item" onclick="showModal('Gulab Jamun')">
+            <div class="food-item" onclick="eatFood(this, 'Gulab Jamun', 99)">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3aJrkMZfZWaRkqQu36Y9TBzYlCrkKHvy7mw&s" alt="Gulab Jamun">
             </div>
-            <div class="food-item" onclick="showModal('Momos')">
+            <div class="food-item" onclick="eatFood(this, 'Momos', 129)">
                 <img src="https://butfirstchai.com/wp-content/uploads/2022/08/beef-momos-recipe.jpg" alt="Momos">
             </div>
-            <div class="food-item" onclick="showModal('Chilly Potato')">
+            <div class="food-item" onclick="eatFood(this, 'Chilly Potato', 149)">
                 <img src="https://static.toiimg.com/photo/52532656.cms" alt="Chilly Potato">
             </div>
         </div>
@@ -206,22 +322,98 @@
     <div class="modal" id="foodModal">
         <div class="modal-content">
             <h2>OMG! Kesa Laga Maam Aapko <span id="foodName"></span>? 😋</h2>
-            <p>Spill the tea! Rate this dish! 💖✨</p>
+            <p id="modalMessage">Spill the tea! Share your thoughts! 💖✨</p>
+            <div class="rating">
+                <div class="rating-buttons">
+                    <button onclick="rateFood('Good')" class="continue-btn">Good! 👍</button>
+                    <button onclick="rateFood('Best')" class="continue-btn">Best! ⭐</button>
+                    <button onclick="rateFood('Perfect')" class="continue-btn">Perfect! 🌟</button>
+                </div>
+            </div>
+            <div id="billDetails" class="bill-details" style="display: none;">
+            </div>
             <button class="continue-btn" onclick="hideModal()">Thanks bestie! 🌟</button>
         </div>
     </div>
 
     <script>
+        let foodEatenCount = 0;
+        let totalBill = 0;
+        let orderedItems = [];
+
         function hideBanner() {
             document.getElementById('welcomeBanner').style.display = 'none';
             document.getElementById('foodGallery').style.display = 'block';
         }
 
+        function eatFood(element, foodName, price) {
+            foodEatenCount++;
+            totalBill += price;
+            orderedItems.push({ name: foodName, price: price });
+            
+            element.classList.add('eating');
+            setTimeout(() => {
+                element.classList.add('eaten');
+                showModal(foodName);
+            }, 1000);
+        }
+
+        function showBill() {
+            const modal = document.getElementById('foodModal');
+            const foodNameSpan = document.getElementById('foodName');
+            const modalMessage = document.getElementById('modalMessage');
+            const ratingDiv = document.querySelector('.rating');
+            const billDetails = document.getElementById('billDetails');
+            
+            modal.style.display = 'flex';
+            foodNameSpan.textContent = "the feast";
+            modalMessage.textContent = "Here's your bill! 🧾";
+            ratingDiv.style.display = 'none';
+            
+            let billHTML = '<h3>Bill Details:</h3>';
+            if(orderedItems.length === 0) {
+                billHTML += '<p>No items ordered yet!</p>';
+            } else {
+                orderedItems.forEach(item => {
+                    billHTML += `
+                        <div class="bill-item">
+                            <span>${item.name}</span>
+                            <span>₹${item.price}</span>
+                        </div>`;
+                });
+                billHTML += `
+                    <div class="bill-item total-amount">
+                        <span>Total Amount</span>
+                        <span>₹${totalBill}</span>
+                    </div>
+                    <p style="margin-top: 20px; font-style: italic; color: #666;">
+                        Or Kha Lo Khana Ho to Baad me Mat bolna Parth Nhi di... 😅
+                    </p>`;
+            }
+            
+            billDetails.innerHTML = billHTML;
+            billDetails.style.display = 'block';
+        }
+
         function showModal(foodName) {
             const modal = document.getElementById('foodModal');
             const foodNameSpan = document.getElementById('foodName');
+            const modalMessage = document.getElementById('modalMessage');
+            const ratingDiv = document.querySelector('.rating');
+            const billDetails = document.getElementById('billDetails');
+            
             modal.style.display = 'flex';
             foodNameSpan.textContent = foodName;
+            modalMessage.textContent = "Spill the tea! Rate this dish! 💖✨";
+            ratingDiv.style.display = 'flex';
+            billDetails.style.display = 'none';
+        }
+
+        function rateFood(rating) {
+            const foodName = document.getElementById('foodName').textContent;
+            const modalMessage = document.getElementById('modalMessage');
+            modalMessage.textContent = `You rated ${foodName} ${rating} stars! Thank you! 🎉`;
+            setTimeout(hideModal, 1500);
         }
 
         function hideModal() {
